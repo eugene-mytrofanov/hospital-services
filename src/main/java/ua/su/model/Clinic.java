@@ -1,26 +1,26 @@
 package ua.su.model;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class Clinic {
 
     private String name;
     private String address;
     private String phone;
-    private boolean isPrivateClinic;
-    private boolean isInsuranceSupported;
-    private ArrayList<Doctor> doctors;
-    private ArrayList<MedicalService> services;
+    private Boolean isClinicPrivate;
+    private Boolean isInsuranceSupported;
+    private Integer numberOfDoctors;
+    private List<MedicalService> medicalServices;
 
-    public Clinic(String name, String address, String phone, boolean isPrivateClinic, boolean isInsuranceSupported,
-                  ArrayList<Doctor> doctors, ArrayList<MedicalService> services) {
+    public Clinic(String name, String address, String phone, Boolean isClinicPrivate, Boolean isInsuranceSupported,
+                  Integer numberOfDoctors, List<MedicalService> medicalServices) {
         this.name = name;
         this.address = address;
         this.phone = phone;
-        this.isPrivateClinic = isPrivateClinic;
+        this.isClinicPrivate = isClinicPrivate;
         this.isInsuranceSupported = isInsuranceSupported;
-        this.doctors = doctors;
-        this.services = services;
+        this.numberOfDoctors = numberOfDoctors;
+        this.medicalServices = medicalServices;
     }
 
     public String getName() {
@@ -47,15 +47,15 @@ public class Clinic {
         this.phone = phone;
     }
 
-    public boolean isPrivateClinic() {
-        return isPrivateClinic;
+    public Boolean isPrivateClinic() {
+        return isClinicPrivate;
     }
 
     public void setPrivateClinic(boolean privateClinic) {
-        isPrivateClinic = privateClinic;
+        isClinicPrivate = privateClinic;
     }
 
-    public boolean isInsuranceSupported() {
+    public Boolean isInsuranceSupported() {
         return isInsuranceSupported;
     }
 
@@ -63,19 +63,19 @@ public class Clinic {
         isInsuranceSupported = insuranceSupported;
     }
 
-    public ArrayList<Doctor> getDoctors() {
-        return doctors;
+    public Integer getNumberOfDoctors() {
+        return numberOfDoctors;
     }
 
-    public void setDoctors(ArrayList<Doctor> doctors) {
-        this.doctors = doctors;
+    public void setNumberOfDoctors(Integer numberOfDoctors) {
+        this.numberOfDoctors = numberOfDoctors;
     }
 
-    public ArrayList<MedicalService> getServices() {
-        return services;
+    public List<MedicalService> getMedicalServices() {
+        return medicalServices;
     }
 
-    public void setServices(ArrayList<MedicalService> services) {
-        this.services = services;
+    public void setMedicalServices(List<MedicalService> medicalServices) {
+        this.medicalServices = medicalServices;
     }
 }

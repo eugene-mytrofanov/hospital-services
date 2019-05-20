@@ -3,11 +3,11 @@ package ua.su.model;
 public class MedicalService {
 
     private String title;
-    private double price;
-    private int insuranceCoverage;
-    private int procedureDuration;
+    private Double price;
+    private Integer insuranceCoverage;
+    private Integer procedureDuration;
 
-    public MedicalService(String title, double price, int insuranceCoverage, int procedureDuration) {
+    public MedicalService(String title, Double price, Integer insuranceCoverage, Integer procedureDuration) {
         this.title = title;
         this.price = price;
         this.insuranceCoverage = insuranceCoverage;
@@ -22,27 +22,27 @@ public class MedicalService {
         this.title = title;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
-    public int getInsuranceCoverage() {
+    public Integer InsuranceCoverage() {
         return insuranceCoverage;
     }
 
-    public void setInsuranceCoverage(int insuranceCoverage) {
+    public void setInsuranceCoverage(Integer insuranceCoverage) {
         this.insuranceCoverage = insuranceCoverage;
     }
 
-    public int getProcedureDuration() {
+    public Integer getProcedureDuration() {
         return procedureDuration;
     }
 
-    public void setProcedureDuration(int procedureDuration) {
+    public void setProcedureDuration(Integer procedureDuration) {
         this.procedureDuration = procedureDuration;
     }
 }
