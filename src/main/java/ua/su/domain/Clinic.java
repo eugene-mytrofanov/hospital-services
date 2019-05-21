@@ -1,4 +1,4 @@
-package ua.su.model;
+package ua.su.domain;
 
 import java.util.List;
 
@@ -10,17 +10,17 @@ public class Clinic {
     private Boolean isClinicPrivate;
     private Boolean isInsuranceSupported;
     private Integer numberOfDoctors;
-    private List<MedicalService> medicalServices;
+    private List<MedicalProcedure> medicalProcedures;
 
     public Clinic(String name, String address, String phone, Boolean isClinicPrivate, Boolean isInsuranceSupported,
-                  Integer numberOfDoctors, List<MedicalService> medicalServices) {
+                  Integer numberOfDoctors, List<MedicalProcedure> medicalProcedures) {
         this.name = name;
         this.address = address;
         this.phone = phone;
         this.isClinicPrivate = isClinicPrivate;
         this.isInsuranceSupported = isInsuranceSupported;
         this.numberOfDoctors = numberOfDoctors;
-        this.medicalServices = medicalServices;
+        this.medicalProcedures = medicalProcedures;
     }
 
     public String getName() {
@@ -71,11 +71,11 @@ public class Clinic {
         this.numberOfDoctors = numberOfDoctors;
     }
 
-    public List<MedicalService> getMedicalServices() {
-        return medicalServices;
+    public List<MedicalProcedure> getMedicalProcedures() {
+        return medicalProcedures;
     }
 
-    public void setMedicalServices(List<MedicalService> medicalServices) {
-        this.medicalServices = medicalServices;
+    public void setMedicalProcedures(List<MedicalProcedure> medicalProcedures) {
+        this.medicalProcedures = medicalProcedures;
     }
 }
