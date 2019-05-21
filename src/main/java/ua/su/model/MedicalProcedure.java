@@ -1,13 +1,13 @@
 package ua.su.model;
 
-public class MedicalService {
+public class MedicalProcedure {
 
     private String title;
     private Double price;
     private Integer insuranceCoverage;
     private Integer procedureDuration;
 
-    public MedicalService(String title, Double price, Integer insuranceCoverage, Integer procedureDuration) {
+    public MedicalProcedure(String title, Double price, Integer insuranceCoverage, Integer procedureDuration) {
         this.title = title;
         this.price = price;
         this.insuranceCoverage = insuranceCoverage;
