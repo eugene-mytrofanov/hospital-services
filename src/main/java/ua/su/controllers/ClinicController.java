@@ -1,4 +1,4 @@
 package ua.su.controllers;
 
-public interface ClinicController {
+public class ClinicController {
 }
