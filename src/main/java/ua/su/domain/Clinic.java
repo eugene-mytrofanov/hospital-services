@@ -7,17 +7,17 @@ public class Clinic {
     private String name;
     private String address;
     private String phone;
-    private Boolean isClinicPrivate;
+    private ClinicType clinicType;
     private Boolean isInsuranceSupported;
     private Integer numberOfDoctors;
     private List<MedicalProcedure> medicalProcedures;
 
-    public Clinic(String name, String address, String phone, Boolean isClinicPrivate, Boolean isInsuranceSupported,
+    public Clinic(String name, String address, String phone, ClinicType clinicType, Boolean isInsuranceSupported,
                   Integer numberOfDoctors, List<MedicalProcedure> medicalProcedures) {
         this.name = name;
         this.address = address;
         this.phone = phone;
-        this.isClinicPrivate = isClinicPrivate;
+        this.clinicType = clinicType;
         this.isInsuranceSupported = isInsuranceSupported;
         this.numberOfDoctors = numberOfDoctors;
         this.medicalProcedures = medicalProcedures;
@@ -47,12 +47,12 @@ public class Clinic {
         this.phone = phone;
     }
 
-    public Boolean isPrivateClinic() {
-        return isClinicPrivate;
+    public ClinicType getClinicType() {
+        return clinicType;
     }
 
-    public void setPrivateClinic(boolean privateClinic) {
-        isClinicPrivate = privateClinic;
+    public void setClinicType(ClinicType clinicType) {
+        this.clinicType = clinicType;
     }
 
     public Boolean isInsuranceSupported() {
