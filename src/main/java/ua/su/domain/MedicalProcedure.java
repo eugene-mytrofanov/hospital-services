@@ -1,4 +1,4 @@
-package ua.su.model;
+package ua.su.domain;
 
 public class MedicalProcedure {
 
