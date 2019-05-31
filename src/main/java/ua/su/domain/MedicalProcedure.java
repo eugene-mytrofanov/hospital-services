@@ -30,7 +30,7 @@ public class MedicalProcedure {
         this.price = price;
     }
 
-    public Integer InsuranceCoverage() {
+    public Integer getInsuranceCoverage() {
         return insuranceCoverage;
     }
 
