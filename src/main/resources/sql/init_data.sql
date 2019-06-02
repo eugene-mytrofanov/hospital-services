@@ -1,14 +1,14 @@
 INSERT INTO clinics (name, address, phone, is_insurance_supported, clinic_type, number_of_doctors)
-    VALUES ('Evviva', '90 Sumska str', '057-700-33-03', 'true', 'private', 110);
+    VALUES ('Evviva', '90 Sumska str', '057-700-33-03', 'true', 'PRIVATE', 110);
 
 INSERT INTO clinics (name, address, phone, is_insurance_supported, clinic_type, number_of_doctors)
-    VALUES ('La Vita Nova Surrogacy', '22B Kultury str', '067-577-79-45', 'true', 'private', 45);
+    VALUES ('La Vita Nova Surrogacy', '22B Kultury str', '067-577-79-45', 'true', 'PRIVATE', 45);
 
 INSERT INTO clinics (name, address, phone, is_insurance_supported, clinic_type, number_of_doctors)
-    VALUES ('Oblasna Travmatolohichna Likarnya', '266В Saltivske Hwy', '057-711-79-45', 'false', 'government', 250);
+    VALUES ('Oblasna Travmatolohichna Likarnya', '266В Saltivske Hwy', '057-711-79-45', 'false', 'GOVERNMENT', 250);
 
 INSERT INTO clinics (name, address, phone, is_insurance_supported, clinic_type, number_of_doctors)
-    VALUES ('Regional Children Hospital', '5 Ozerianska Str', '057-372-75-21', 'false', 'government', 185);
+    VALUES ('Regional Children Hospital', '5 Ozerianska Str', '057-372-75-21', 'false', 'GOVERNMENT', 185);
 
 INSERT INTO medical_procedures (title, price, insurance_coverage, procedure_duration, clinic_id)
     VALUES ('General blood analysis', 110.00, 100, 10, 1);
