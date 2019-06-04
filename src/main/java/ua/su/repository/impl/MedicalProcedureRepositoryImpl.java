@@ -1,5 +1,6 @@
 package ua.su.repository.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -19,6 +20,7 @@ public class MedicalProcedureRepositoryImpl implements MedicalProcedureRepositor
 
     private final JdbcTemplate jdbcTemplate;
 
+    @Autowired
     public MedicalProcedureRepositoryImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
@@ -67,4 +69,5 @@ public class MedicalProcedureRepositoryImpl implements MedicalProcedureRepositor
                 medicalProcedure.getProcedureDuration(), id);
         return getOne(id);
     }
+
 }
