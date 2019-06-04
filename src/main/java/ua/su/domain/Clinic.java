@@ -12,6 +12,11 @@ public class Clinic {
     private Integer numberOfDoctors;
     private List<MedicalProcedure> medicalProcedures;
 
+    //  Spring displays an error without empty constructor at the runtime, @Autowired annotation does not help
+    public Clinic() {
+
+    }
+
     public Clinic(String name, String address, String phone, ClinicType clinicType, Boolean isInsuranceSupported,
                   Integer numberOfDoctors, List<MedicalProcedure> medicalProcedures) {
         this.name = name;

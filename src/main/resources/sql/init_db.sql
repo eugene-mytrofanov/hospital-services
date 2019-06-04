@@ -17,6 +17,7 @@ CREATE TABLE medical_procedures
     title VARCHAR(50) NOT NULL,
     price REAL NOT NULL,
     insurance_coverage DECIMAL,
+    procedure_duration INTEGER,
     clinic_id BIGINT NOT NULL,
 	CONSTRAINT medical_procedures_clinics_fkey FOREIGN KEY (clinic_id) REFERENCES clinics(id)
 );
