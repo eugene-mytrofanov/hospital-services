@@ -40,8 +40,8 @@ public class ClinicRepositoryImpl implements ClinicRepository {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement ps =
-                    connection.prepareStatement("insert into clinics(name, address, phone, is_insurance_supported, " +
-                                    "clinic_type, number_of_doctors) values (?, ?, ?, ?, ?, ?)",
+                    connection.prepareStatement("INSERT INTO clinics(name, address, phone, is_insurance_supported, " +
+                                    "clinic_type, number_of_doctors) VALUES (?, ?, ?, ?, ?, ?)",
                             new String[]{"id"});
             ps.setString(1, clinic.getName());
             ps.setString(2, clinic.getAddress());
@@ -57,13 +57,13 @@ public class ClinicRepositoryImpl implements ClinicRepository {
 
     @Override
     public void delete(Long id) {
-        jdbcTemplate.update("DELETE FROM clinics where id = ?", id);
+        jdbcTemplate.update("DELETE FROM clinics WHERE id = ?", id);
     }
 
     @Override
     public Clinic update(Long id, Clinic clinic) {
-        jdbcTemplate.update("update clinics set name = ?, address = ?, phone = ?, is_insurance_supported = ?," +
-                        "clinic_type = ?, number_of_doctors = ?, where id = ?",
+        jdbcTemplate.update("UPDATE clinics SET name = ?, address = ?, phone = ?, is_insurance_supported = ?," +
+                        "clinic_type = ?, number_of_doctors = ?, WHERE id = ?",
                 clinic.getName(), clinic.getAddress(), clinic.getPhone(), clinic.isInsuranceSupported(),
                 clinic.getClinicType(), clinic.getNumberOfDoctors(), id);
         return getOne(id);
