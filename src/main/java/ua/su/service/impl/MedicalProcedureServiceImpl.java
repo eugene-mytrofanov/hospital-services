@@ -34,7 +34,12 @@ public class MedicalProcedureServiceImpl implements MedicalProcedureService {
     }
 
     @Override
-    public MedicalProcedure addEntry(MedicalProcedure medicalProcedure, Integer clinicId) {
+    public void deleteByClinicId(Long clinicId){
+        medicalProcedureRepository.deleteByClinicId(clinicId);
+    }
+
+    @Override
+    public MedicalProcedure addEntry(MedicalProcedure medicalProcedure, Long clinicId) {
         return medicalProcedureRepository.insert(medicalProcedure, clinicId);
     }
 

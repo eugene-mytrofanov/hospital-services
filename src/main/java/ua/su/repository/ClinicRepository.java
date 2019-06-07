@@ -9,6 +9,8 @@ public interface ClinicRepository {
 
     List<Clinic> findAll();
 
+    List<String> findByCriteria(Integer n);
+
     Clinic getOne(Long id);
 
     Clinic insert(Clinic clinic);

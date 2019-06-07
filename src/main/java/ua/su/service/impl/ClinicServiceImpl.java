@@ -1,15 +1,11 @@
 package ua.su.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Service;
-import ua.su.config.ApplicationConfiguration;
 import ua.su.domain.Clinic;
 import ua.su.domain.MedicalProcedure;
 import ua.su.repository.ClinicRepository;
 import ua.su.repository.MedicalProcedureRepository;
-import ua.su.repository.impl.MedicalProcedureRepositoryImpl;
 import ua.su.service.ClinicService;
 
 import java.util.List;
@@ -18,10 +14,12 @@ import java.util.List;
 public class ClinicServiceImpl implements ClinicService {
 
     private final ClinicRepository clinicRepository;
+    private final MedicalProcedureRepository medicalProcedureRepository;
 
     @Autowired
-    public ClinicServiceImpl(ClinicRepository clinicRepository) {
+    public ClinicServiceImpl(ClinicRepository clinicRepository, MedicalProcedureRepository medicalProcedureRepository) {
         this.clinicRepository = clinicRepository;
+        this.medicalProcedureRepository = medicalProcedureRepository;
     }
 
     @Override
@@ -31,10 +29,10 @@ public class ClinicServiceImpl implements ClinicService {
 
     @Override
     public Clinic getEntry(Long id) {
-        Clinic c = clinicRepository.getOne(id);
+        Clinic clinic = clinicRepository.getOne(id);
         List <MedicalProcedure> medicalProcedures = clinicRepository.getAllByClinicId(id);
-        c.setMedicalProcedures(medicalProcedures);
-        return c;
+        clinic.setMedicalProcedures(medicalProcedures);
+        return clinic;
     }
 
     @Override
@@ -44,27 +42,40 @@ public class ClinicServiceImpl implements ClinicService {
 
     @Override
     public Clinic addEntry(Clinic clinic) {
-        Clinic c = clinicRepository.insert(clinic);
-        ApplicationContext ctx = new AnnotationConfigApplicationContext(ApplicationConfiguration.class);
-        MedicalProcedureRepositoryImpl medicalProcedureRepository = ctx.getBean(MedicalProcedureRepositoryImpl.class);
-
-        List<MedicalProcedure> mp = clinic.getMedicalProcedures();
-//        for (MedicalProcedure medicalProcedure :) {
-//            medicalProcedureRepository.insert();
-//        }
-
-        // TO DO: insert child instances 'Medical Procedure'
-
-        return c;
+        Clinic newClinic = clinicRepository.insert(clinic);
+        List<MedicalProcedure> mpList = clinic.getMedicalProcedures();
+        Long clinicId = newClinic.getId();
+        if (mpList != null) {
+            for (MedicalProcedure medicalProcedure : mpList) {
+                medicalProcedureRepository.insert(medicalProcedure, clinicId);
+            }
+        }
+        return newClinic;
     }
 
     @Override
     public Clinic update(Long id, Clinic clinic) {
-        return null;
+        medicalProcedureRepository.deleteByClinicId(id);
+        clinicRepository.update(id, clinic);
+        List<MedicalProcedure> mpList = clinic.getMedicalProcedures();
+        if (mpList != null) {
+            for (MedicalProcedure medicalProcedure : mpList) {
+                medicalProcedureRepository.insert(medicalProcedure, id);
+            }
+        }
+        return getEntry(id);
     }
 
     @Override
-    public List<Clinic> findByCriteria() {
+    public List<String> findByCriteriaSQL(Integer n) {
+        return clinicRepository.findByCriteria(n);
+    }
+
+    @Override
+    public List<String> findByCriteriaStreamAPI(Integer n) {
+//        List<Clinic> clinics = clinicRepository.findAll();
+//        List<String> addresses = clinics.stream().filter()
+
         return null;
     }
 }

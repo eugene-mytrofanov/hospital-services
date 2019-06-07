@@ -53,6 +53,7 @@ public class ClinicRepositoryImpl implements ClinicRepository {
             return ps;
         }, keyHolder);
         long clinicId = keyHolder.getKey().longValue();
+        clinic.setId(clinicId);
         return getOne(clinicId);
     }
 
@@ -72,5 +73,14 @@ public class ClinicRepositoryImpl implements ClinicRepository {
 
     public List<MedicalProcedure> getAllByClinicId(Long id) {
         return jdbcTemplate.queryForList("SELECT * FROM medical_procedures WHERE clinic_id = ?", MedicalProcedure.class, id);
+    }
+
+//    Список адресов клиник у которых нет возможности пользоваться страховкой и у который врачей меньше n,
+//    отсортированных в алфавитном порядке
+
+    @Override
+    public List<String> findByCriteria(Integer n) {
+        return jdbcTemplate.queryForList("SELECT address FROM clinics WHERE is_insurance_supported = false AND " +
+                "number_of_doctors > ? ORDER BY address ASC;", String.class, n);
     }
 }

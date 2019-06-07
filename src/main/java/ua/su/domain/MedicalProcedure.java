@@ -1,13 +1,14 @@
 package ua.su.domain;
 
-public class MedicalProcedure {
+public class MedicalProcedure extends ID {
 
     private String title;
     private Double price;
     private Integer insuranceCoverage;
     private Integer procedureDuration;
 
-    public MedicalProcedure(String title, Double price, Integer insuranceCoverage, Integer procedureDuration) {
+    public MedicalProcedure(Long id, String title, Double price, Integer insuranceCoverage, Integer procedureDuration) {
+        super(id);
         this.title = title;
         this.price = price;
         this.insuranceCoverage = insuranceCoverage;

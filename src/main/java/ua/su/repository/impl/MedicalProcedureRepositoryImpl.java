@@ -36,7 +36,7 @@ public class MedicalProcedureRepositoryImpl implements MedicalProcedureRepositor
     }
 
     @Override
-    public MedicalProcedure insert(MedicalProcedure medicalProcedure, Integer clinicId) {
+    public MedicalProcedure insert(MedicalProcedure medicalProcedure, Long clinicId) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement ps =
@@ -47,16 +47,22 @@ public class MedicalProcedureRepositoryImpl implements MedicalProcedureRepositor
             ps.setDouble(2, medicalProcedure.getPrice());
             ps.setInt(3, medicalProcedure.getInsuranceCoverage());
             ps.setInt(4, medicalProcedure.getProcedureDuration());
-            ps.setInt(5, clinicId);
+            ps.setLong(5, clinicId);
             return ps;
         }, keyHolder);
         long medicalProcedureId = keyHolder.getKey().longValue();
+        medicalProcedure.setId(medicalProcedureId);
         return getOne(medicalProcedureId);
     }
 
     @Override
     public void delete(Long id) {
         jdbcTemplate.update("DELETE FROM medical_procedures where id = ?", id);
+    }
+
+    @Override
+    public void deleteByClinicId(Long clinicId) {
+        jdbcTemplate.update("DELETE FROM medical_procedures where clinic_id = ?", clinicId);
     }
 
     @Override
