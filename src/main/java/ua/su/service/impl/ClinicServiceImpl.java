@@ -9,6 +9,7 @@ import ua.su.repository.MedicalProcedureRepository;
 import ua.su.service.ClinicService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ClinicServiceImpl implements ClinicService {
@@ -30,13 +31,18 @@ public class ClinicServiceImpl implements ClinicService {
     @Override
     public Clinic getEntry(Long id) {
         Clinic clinic = clinicRepository.getOne(id);
-        List <MedicalProcedure> medicalProcedures = clinicRepository.getAllByClinicId(id);
+        if (clinic == null) {
+            throw new RuntimeException("Cannot find cat with id " + id);
+        }
+        List<MedicalProcedure> medicalProcedures = clinicRepository.getAllByClinicId(id);
         clinic.setMedicalProcedures(medicalProcedures);
         return clinic;
     }
 
     @Override
     public void delete(Long id) {
+        clinicRepository.getOne(id);
+        medicalProcedureRepository.deleteByClinicId(id);
         clinicRepository.delete(id);
     }
 
@@ -55,6 +61,7 @@ public class ClinicServiceImpl implements ClinicService {
 
     @Override
     public Clinic update(Long id, Clinic clinic) {
+        clinicRepository.getOne(id);
         medicalProcedureRepository.deleteByClinicId(id);
         clinicRepository.update(id, clinic);
         List<MedicalProcedure> mpList = clinic.getMedicalProcedures();
@@ -71,11 +78,16 @@ public class ClinicServiceImpl implements ClinicService {
         return clinicRepository.findByCriteria(n);
     }
 
+//    Список адресов клиник у которых нет возможности пользоваться страховкой и у который врачей меньше n,
+//    отсортированных в алфавитном порядке
+
     @Override
     public List<String> findByCriteriaStreamAPI(Integer n) {
-//        List<Clinic> clinics = clinicRepository.findAll();
-//        List<String> addresses = clinics.stream().filter()
-
-        return null;
+        List<Clinic> clinics = clinicRepository.findAll();
+        return clinics.stream()
+                .filter(clinic -> !clinic.isInsuranceSupported() && clinic.getNumberOfDoctors() < n)
+                .map(clinic -> clinic.getAddress())
+                .sorted()
+                .collect(Collectors.toList());
     }
 }

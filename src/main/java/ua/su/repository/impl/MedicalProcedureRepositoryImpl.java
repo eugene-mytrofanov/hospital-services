@@ -57,7 +57,7 @@ public class MedicalProcedureRepositoryImpl implements MedicalProcedureRepositor
 
     @Override
     public void delete(Long id) {
-        jdbcTemplate.update("DELETE FROM medical_procedures where id = ?", id);
+        jdbcTemplate.update("DELETE FROM medical_procedures where clinic_id = ?", id);
     }
 
     @Override
