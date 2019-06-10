@@ -40,8 +40,8 @@ public class MedicalProcedureRepositoryImpl implements MedicalProcedureRepositor
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement ps =
-                    connection.prepareStatement("insert into medical_procedures(title, price, insurance_coverage, " +
-                                    "procedure_duration, clinic_id) values (?, ?, ?, ?, ?)",
+                    connection.prepareStatement("INSERT INTO medical_procedures(title, price, insurance_coverage, " +
+                                    "procedure_duration, clinic_id) VALUES (?, ?, ?, ?, ?)",
                             new String[]{"id"});
             ps.setString(1, medicalProcedure.getTitle());
             ps.setDouble(2, medicalProcedure.getPrice());
@@ -57,23 +57,22 @@ public class MedicalProcedureRepositoryImpl implements MedicalProcedureRepositor
 
     @Override
     public void delete(Long id) {
-        jdbcTemplate.update("DELETE FROM medical_procedures where clinic_id = ?", id);
+        jdbcTemplate.update("DELETE FROM medical_procedures WHERE id = ?", id);
     }
 
     @Override
     public void deleteByClinicId(Long clinicId) {
-        jdbcTemplate.update("DELETE FROM medical_procedures where clinic_id = ?", clinicId);
+        jdbcTemplate.update("DELETE FROM medical_procedures WHERE clinic_id = ?", clinicId);
     }
 
     @Override
     public MedicalProcedure update(Long id, MedicalProcedure medicalProcedure) {
-        jdbcTemplate.update("update medical_procedures set title = ?, price = ?, insurance_coverage = ?, procedure_duration = ?," +
-                        ", where id = ?",
+        jdbcTemplate.update("UPDATE medical_procedures SET title = ?, price = ?, insurance_coverage = ?, procedure_duration = ?," +
+                        ", WHERE id = ?",
                 medicalProcedure.getTitle(),
                 medicalProcedure.getPrice(),
                 medicalProcedure.getInsuranceCoverage(),
                 medicalProcedure.getProcedureDuration(), id);
         return getOne(id);
     }
-
 }
