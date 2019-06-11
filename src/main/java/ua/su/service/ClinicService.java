@@ -15,8 +15,4 @@ public interface ClinicService {
 
     Clinic update(Long id, Clinic clinic);
 
-    List<String> findByCriteriaSQL(Integer n);
-
-    List<String> findByCriteriaStreamAPI(Integer n);
-
 }

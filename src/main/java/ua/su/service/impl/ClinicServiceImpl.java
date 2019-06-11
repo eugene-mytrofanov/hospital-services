@@ -9,13 +9,12 @@ import ua.su.repository.MedicalProcedureRepository;
 import ua.su.service.ClinicService;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ClinicServiceImpl implements ClinicService {
 
-    private final ClinicRepository clinicRepository;
-    private final MedicalProcedureRepository medicalProcedureRepository;
+    final ClinicRepository clinicRepository;
+    final MedicalProcedureRepository medicalProcedureRepository;
 
     @Autowired
     public ClinicServiceImpl(ClinicRepository clinicRepository, MedicalProcedureRepository medicalProcedureRepository) {
@@ -49,10 +48,10 @@ public class ClinicServiceImpl implements ClinicService {
     @Override
     public Clinic addEntry(Clinic clinic) {
         Clinic newClinic = clinicRepository.insert(clinic);
-        List<MedicalProcedure> mpList = clinic.getMedicalProcedures();
+        List<MedicalProcedure> medicalProcedures = clinic.getMedicalProcedures();
         Long clinicId = newClinic.getId();
-        if (mpList != null) {
-            for (MedicalProcedure medicalProcedure : mpList) {
+        if (medicalProcedures != null) {
+            for (MedicalProcedure medicalProcedure : medicalProcedures) {
                 medicalProcedureRepository.insert(medicalProcedure, clinicId);
             }
         }
@@ -71,23 +70,5 @@ public class ClinicServiceImpl implements ClinicService {
             }
         }
         return getEntry(id);
-    }
-
-    @Override
-    public List<String> findByCriteriaSQL(Integer n) {
-        return clinicRepository.findByCriteria(n);
-    }
-
-//    Список адресов клиник у которых нет возможности пользоваться страховкой и у который врачей меньше n,
-//    отсортированных в алфавитном порядке
-
-    @Override
-    public List<String> findByCriteriaStreamAPI(Integer n) {
-        List<Clinic> clinics = clinicRepository.findAll();
-        return clinics.stream()
-                .filter(clinic -> !clinic.isInsuranceSupported() && clinic.getNumberOfDoctors() < n)
-                .map(clinic -> clinic.getAddress())
-                .sorted()
-                .collect(Collectors.toList());
     }
 }
