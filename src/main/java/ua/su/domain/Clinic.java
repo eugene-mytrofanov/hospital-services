@@ -7,24 +7,24 @@ public class Clinic extends ID {
     private String name;
     private String address;
     private String phone;
-    private ClinicType clinicType;
     private Boolean isInsuranceSupported;
+    private ClinicType clinicType;
     private Integer numberOfDoctors;
     private List<MedicalProcedure> medicalProcedures;
 
-    //  Spring displays an error without empty constructor at the runtime, @Autowired annotation does not help
+    //  Spring displays an error without empty constructor at the runtime
     public Clinic() {
 
     }
 
-    public Clinic(Long id, String name, String address, String phone, ClinicType clinicType, Boolean isInsuranceSupported,
+    public Clinic(Long id, String name, String address, String phone, Boolean isInsuranceSupported, ClinicType clinicType,
                   Integer numberOfDoctors, List<MedicalProcedure> medicalProcedures) {
         super(id);
         this.name = name;
         this.address = address;
         this.phone = phone;
-        this.clinicType = clinicType;
         this.isInsuranceSupported = isInsuranceSupported;
+        this.clinicType = clinicType;
         this.numberOfDoctors = numberOfDoctors;
         this.medicalProcedures = medicalProcedures;
     }
@@ -61,7 +61,7 @@ public class Clinic extends ID {
         this.clinicType = clinicType;
     }
 
-    public Boolean isInsuranceSupported() {
+    public Boolean getIsInsuranceSupported() {
         return isInsuranceSupported;
     }
 

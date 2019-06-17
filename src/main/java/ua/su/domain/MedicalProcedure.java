@@ -7,6 +7,10 @@ public class MedicalProcedure extends ID {
     private Integer insuranceCoverage;
     private Integer procedureDuration;
 
+    public MedicalProcedure(){
+
+    }
+
     public MedicalProcedure(Long id, String title, Double price, Integer insuranceCoverage, Integer procedureDuration) {
         super(id);
         this.title = title;

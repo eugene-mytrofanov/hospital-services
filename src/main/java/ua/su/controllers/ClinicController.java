@@ -1,10 +1,9 @@
 package ua.su.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ua.su.domain.Clinic;
 import ua.su.service.ClinicService;
 
@@ -26,4 +25,25 @@ public class ClinicController {
         return clinicService.findAll();
     }
 
+    @GetMapping(value = "/{id}")
+    public Clinic getClinic(@PathVariable Long id){
+        return clinicService.getEntry(id);
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Clinic createClinic (@RequestBody Clinic clinic){
+        return clinicService.addEntry(clinic);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteClinic(@PathVariable Long id){
+        clinicService.delete(id);
+    }
+
+    @PutMapping(value = "/{id}")
+    public Clinic updateClinic(@RequestBody Clinic clinic, @PathVariable Long id){
+        return clinicService.update(id, clinic);
+    }
 }

@@ -31,7 +31,7 @@ public class ClinicServiceImpl implements ClinicService {
     public Clinic getEntry(Long id) {
         Clinic clinic = clinicRepository.getOne(id);
         if (clinic == null) {
-            throw new RuntimeException("Cannot find cat with id " + id);
+            throw new RuntimeException("Cannot find clinic with id " + id);
         }
         List<MedicalProcedure> medicalProcedures = clinicRepository.getAllByClinicId(id);
         clinic.setMedicalProcedures(medicalProcedures);
@@ -40,7 +40,10 @@ public class ClinicServiceImpl implements ClinicService {
 
     @Override
     public void delete(Long id) {
-        clinicRepository.getOne(id);
+        Clinic clinic = clinicRepository.getOne(id);
+        if (clinic == null) {
+            throw new RuntimeException("Cannot find clinic with id " + id);
+        }
         medicalProcedureRepository.deleteByClinicId(id);
         clinicRepository.delete(id);
     }
@@ -61,6 +64,10 @@ public class ClinicServiceImpl implements ClinicService {
     @Override
     public Clinic update(Long id, Clinic clinic) {
         clinicRepository.getOne(id);
+        Clinic clinicFromRepository = clinicRepository.getOne(id);
+        if (clinicFromRepository == null) {
+            throw new RuntimeException("Cannot find clinic with id " + id);
+        }
         medicalProcedureRepository.deleteByClinicId(id);
         clinicRepository.update(id, clinic);
         List<MedicalProcedure> mpList = clinic.getMedicalProcedures();

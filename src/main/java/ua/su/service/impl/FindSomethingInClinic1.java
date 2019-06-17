@@ -8,10 +8,8 @@ import ua.su.service.FindSomethingByCriteria;
 
 import java.util.List;
 
-@Service
 public class FindSomethingInClinic1 extends ClinicServiceImpl implements FindSomethingByCriteria {
 
-    @Autowired
     public FindSomethingInClinic1(ClinicRepository clinicRepository, MedicalProcedureRepository medicalProcedureRepository) {
         super(clinicRepository, medicalProcedureRepository);
     }
