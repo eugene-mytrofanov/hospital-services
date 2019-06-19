@@ -12,7 +12,7 @@ public class Clinic extends ID {
     private Integer numberOfDoctors;
     private List<MedicalProcedure> medicalProcedures;
 
-    //  Spring displays an error without empty constructor at the runtime, @Autowired annotation does not help
+    //  Spring displays an error without empty constructor at the runtime
     public Clinic() {
 
     }
@@ -61,11 +61,11 @@ public class Clinic extends ID {
         this.clinicType = clinicType;
     }
 
-    public Boolean isInsuranceSupported() {
+    public Boolean getIsInsuranceSupported() {
         return isInsuranceSupported;
     }
 
-    public void setInsuranceSupported(boolean insuranceSupported) {
+    public void setIsInsuranceSupported(boolean insuranceSupported) {
         isInsuranceSupported = insuranceSupported;
     }
 
