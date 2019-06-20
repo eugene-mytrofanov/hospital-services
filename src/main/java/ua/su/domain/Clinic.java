@@ -65,7 +65,7 @@ public class Clinic extends ID {
         return isInsuranceSupported;
     }
 
-    public void setInsuranceSupported(boolean insuranceSupported) {
+    public void setIsInsuranceSupported(boolean insuranceSupported) {
         isInsuranceSupported = insuranceSupported;
     }
 

@@ -1,7 +1,6 @@
 package ua.su.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import ua.su.domain.Clinic;
 import ua.su.domain.MedicalProcedure;
 import ua.su.repository.ClinicRepository;
@@ -10,11 +9,10 @@ import ua.su.service.ClinicService;
 
 import java.util.List;
 
-@Service
 public class ClinicServiceImpl implements ClinicService {
 
-    final ClinicRepository clinicRepository;
-    final MedicalProcedureRepository medicalProcedureRepository;
+    protected final ClinicRepository clinicRepository;
+    protected final MedicalProcedureRepository medicalProcedureRepository;
 
     @Autowired
     public ClinicServiceImpl(ClinicRepository clinicRepository, MedicalProcedureRepository medicalProcedureRepository) {
