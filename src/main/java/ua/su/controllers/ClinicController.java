@@ -23,7 +23,7 @@ public class ClinicController {
 
     @GetMapping
     public List<Clinic> getClinics() {
-        return clinicService.getAll();
+        return clinicService.findAll();
     }
 
 }

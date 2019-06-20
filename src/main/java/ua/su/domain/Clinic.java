@@ -2,7 +2,7 @@ package ua.su.domain;
 
 import java.util.List;
 
-public class Clinic {
+public class Clinic extends ID {
 
     private String name;
     private String address;
@@ -12,13 +12,14 @@ public class Clinic {
     private Integer numberOfDoctors;
     private List<MedicalProcedure> medicalProcedures;
 
-    //  Spring displays an error without empty constructor at the runtime, @Autowired annotation does not help
+    //  Spring displays an error without empty constructor at the runtime
     public Clinic() {
 
     }
 
-    public Clinic(String name, String address, String phone, ClinicType clinicType, Boolean isInsuranceSupported,
+    public Clinic(Long id, String name, String address, String phone, ClinicType clinicType, Boolean isInsuranceSupported,
                   Integer numberOfDoctors, List<MedicalProcedure> medicalProcedures) {
+        super(id);
         this.name = name;
         this.address = address;
         this.phone = phone;
@@ -60,11 +61,11 @@ public class Clinic {
         this.clinicType = clinicType;
     }
 
-    public Boolean isInsuranceSupported() {
+    public Boolean getIsInsuranceSupported() {
         return isInsuranceSupported;
     }
 
-    public void setInsuranceSupported(boolean insuranceSupported) {
+    public void setIsInsuranceSupported(boolean insuranceSupported) {
         isInsuranceSupported = insuranceSupported;
     }
 

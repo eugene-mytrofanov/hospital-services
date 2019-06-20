@@ -7,6 +7,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import ua.su.domain.Clinic;
+import ua.su.domain.MedicalProcedure;
 import ua.su.repository.ClinicRepository;
 
 import java.sql.PreparedStatement;
@@ -46,12 +47,13 @@ public class ClinicRepositoryImpl implements ClinicRepository {
             ps.setString(1, clinic.getName());
             ps.setString(2, clinic.getAddress());
             ps.setString(3, clinic.getPhone());
-            ps.setBoolean(4, clinic.isInsuranceSupported());
+            ps.setBoolean(4, clinic.getIsInsuranceSupported());
             ps.setObject(5, clinic.getClinicType());
             ps.setInt(6, clinic.getNumberOfDoctors());
             return ps;
         }, keyHolder);
         long clinicId = keyHolder.getKey().longValue();
+        clinic.setId(clinicId);
         return getOne(clinicId);
     }
 
@@ -64,8 +66,17 @@ public class ClinicRepositoryImpl implements ClinicRepository {
     public Clinic update(Long id, Clinic clinic) {
         jdbcTemplate.update("UPDATE clinics SET name = ?, address = ?, phone = ?, is_insurance_supported = ?," +
                         "clinic_type = ?, number_of_doctors = ?, WHERE id = ?",
-                clinic.getName(), clinic.getAddress(), clinic.getPhone(), clinic.isInsuranceSupported(),
+                clinic.getName(), clinic.getAddress(), clinic.getPhone(), clinic.getIsInsuranceSupported(),
                 clinic.getClinicType(), clinic.getNumberOfDoctors(), id);
         return getOne(id);
+    }
+
+    public List<MedicalProcedure> getAllByClinicId(Long id) {
+        return jdbcTemplate.queryForList("SELECT * FROM medical_procedures WHERE clinic_id = ?", MedicalProcedure.class, id);
+    }
+
+    public List<String> findByCriteria(Integer n) {
+        return jdbcTemplate.queryForList("SELECT address FROM clinics WHERE is_insurance_supported = false AND " +
+                "number_of_doctors > ? ORDER BY address ASC;", String.class, n);
     }
 }

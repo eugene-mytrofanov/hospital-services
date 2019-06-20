@@ -8,7 +8,8 @@ public interface MedicalProcedureRepository {
 
     List <MedicalProcedure> findAll();
     MedicalProcedure getOne(Long id);
-    MedicalProcedure insert(MedicalProcedure medicalProcedure, Integer clinicId);
+    MedicalProcedure insert(MedicalProcedure medicalProcedure, Long clinicId);
     void delete(Long id);
+    void deleteByClinicId(Long clinicId);
     MedicalProcedure update(Long id, MedicalProcedure medicalProcedure);
 }
