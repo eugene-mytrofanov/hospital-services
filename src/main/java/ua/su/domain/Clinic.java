@@ -7,8 +7,8 @@ public class Clinic extends ID {
     private String name;
     private String address;
     private String phone;
-    private ClinicType clinicType;
     private Boolean isInsuranceSupported;
+    private ClinicType clinicType;
     private Integer numberOfDoctors;
     private List<MedicalProcedure> medicalProcedures;
 
@@ -17,14 +17,14 @@ public class Clinic extends ID {
 
     }
 
-    public Clinic(Long id, String name, String address, String phone, ClinicType clinicType, Boolean isInsuranceSupported,
+    public Clinic(Long id, String name, String address, String phone, Boolean isInsuranceSupported, ClinicType clinicType,
                   Integer numberOfDoctors, List<MedicalProcedure> medicalProcedures) {
         super(id);
         this.name = name;
         this.address = address;
         this.phone = phone;
-        this.clinicType = clinicType;
         this.isInsuranceSupported = isInsuranceSupported;
+        this.clinicType = clinicType;
         this.numberOfDoctors = numberOfDoctors;
         this.medicalProcedures = medicalProcedures;
     }

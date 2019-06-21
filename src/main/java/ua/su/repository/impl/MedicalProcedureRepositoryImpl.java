@@ -67,8 +67,7 @@ public class MedicalProcedureRepositoryImpl implements MedicalProcedureRepositor
 
     @Override
     public MedicalProcedure update(Long id, MedicalProcedure medicalProcedure) {
-        jdbcTemplate.update("UPDATE medical_procedures SET title = ?, price = ?, insurance_coverage = ?, procedure_duration = ?," +
-                        ", WHERE id = ?",
+        jdbcTemplate.update("UPDATE medical_procedures SET title = ?, price = ?, insurance_coverage = ?, procedure_duration = ? WHERE id = ?",
                 medicalProcedure.getTitle(),
                 medicalProcedure.getPrice(),
                 medicalProcedure.getInsuranceCoverage(),

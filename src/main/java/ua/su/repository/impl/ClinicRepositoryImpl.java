@@ -1,6 +1,7 @@
 package ua.su.repository.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -33,7 +34,11 @@ public class ClinicRepositoryImpl implements ClinicRepository {
 
     @Override
     public Clinic getOne(Long id) {
-        return jdbcTemplate.queryForObject("SELECT * FROM clinics WHERE id = ?", ROW_MAPPER, id);
+        try {
+            return jdbcTemplate.queryForObject("SELECT * FROM clinics WHERE id = ?", ROW_MAPPER, id);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     @Override
@@ -48,7 +53,7 @@ public class ClinicRepositoryImpl implements ClinicRepository {
             ps.setString(2, clinic.getAddress());
             ps.setString(3, clinic.getPhone());
             ps.setBoolean(4, clinic.getIsInsuranceSupported());
-            ps.setObject(5, clinic.getClinicType());
+            ps.setString(5, clinic.getClinicType().toString());
             ps.setInt(6, clinic.getNumberOfDoctors());
             return ps;
         }, keyHolder);
@@ -65,14 +70,18 @@ public class ClinicRepositoryImpl implements ClinicRepository {
     @Override
     public Clinic update(Long id, Clinic clinic) {
         jdbcTemplate.update("UPDATE clinics SET name = ?, address = ?, phone = ?, is_insurance_supported = ?," +
-                        "clinic_type = ?, number_of_doctors = ?, WHERE id = ?",
-                clinic.getName(), clinic.getAddress(), clinic.getPhone(), clinic.getIsInsuranceSupported(),
-                clinic.getClinicType(), clinic.getNumberOfDoctors(), id);
+                        "clinic_type = ?, number_of_doctors = ? WHERE id = ?",
+                clinic.getName(),
+                clinic.getAddress(),
+                clinic.getPhone(),
+                clinic.getIsInsuranceSupported(),
+                clinic.getClinicType().toString(),
+                clinic.getNumberOfDoctors(), id);
         return getOne(id);
     }
 
     public List<MedicalProcedure> getAllByClinicId(Long id) {
-        return jdbcTemplate.queryForList("SELECT * FROM medical_procedures WHERE clinic_id = ?", MedicalProcedure.class, id);
+        return jdbcTemplate.query("SELECT * FROM medical_procedures WHERE clinic_id = ?", new BeanPropertyRowMapper<>(MedicalProcedure.class), id);
     }
 
     public List<String> findByCriteria(Integer n) {
