@@ -1,14 +1,21 @@
 package ua.su.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ReflectionUtils;
 import ua.su.domain.Clinic;
 import ua.su.domain.MedicalProcedure;
+import ua.su.exceptions.data.ResourceNotFoundException;
 import ua.su.repository.ClinicRepository;
 import ua.su.repository.MedicalProcedureRepository;
 import ua.su.service.ClinicService;
 
-import java.util.List;
+import java.lang.reflect.Field;
 
+import java.util.List;
+import java.util.Map;
+
+@Transactional
 public class ClinicServiceImpl implements ClinicService {
 
     protected final ClinicRepository clinicRepository;
@@ -29,7 +36,7 @@ public class ClinicServiceImpl implements ClinicService {
     public Clinic getEntry(Long id) {
         Clinic clinic = clinicRepository.getOne(id);
         if (clinic == null) {
-            throw new RuntimeException("Cannot find clinic with id " + id);
+            throw new ResourceNotFoundException("Cannot find clinic with id " + id);
         }
         List<MedicalProcedure> medicalProcedures = clinicRepository.getAllByClinicId(id);
         clinic.setMedicalProcedures(medicalProcedures);
@@ -40,7 +47,7 @@ public class ClinicServiceImpl implements ClinicService {
     public void delete(Long id) {
         Clinic clinic = clinicRepository.getOne(id);
         if (clinic == null) {
-            throw new RuntimeException("Cannot find clinic with id " + id);
+            throw new ResourceNotFoundException("Cannot find clinic with id " + id);
         }
         medicalProcedureRepository.deleteByClinicId(id);
         clinicRepository.delete(id);
@@ -61,10 +68,9 @@ public class ClinicServiceImpl implements ClinicService {
 
     @Override
     public Clinic update(Long id, Clinic clinic) {
-        clinicRepository.getOne(id);
         Clinic clinicFromRepository = clinicRepository.getOne(id);
         if (clinicFromRepository == null) {
-            throw new RuntimeException("Cannot find clinic with id " + id);
+            throw new ResourceNotFoundException("Cannot find clinic with id " + id);
         }
         medicalProcedureRepository.deleteByClinicId(id);
         clinicRepository.update(id, clinic);
@@ -75,5 +81,25 @@ public class ClinicServiceImpl implements ClinicService {
             }
         }
         return getEntry(id);
+    }
+
+    @Override
+    public Clinic partialUpdate(Long id, Map<String, Object> fields) {
+        Clinic clinicFromRepository = clinicRepository.getOne(id);
+        if (clinicFromRepository == null) {
+            throw new ResourceNotFoundException("Cannot find clinic with id " + id);
+        }
+
+        if (fields == null || fields.isEmpty()) {
+            throw new ResourceNotFoundException("The fields are invalid");
+        }
+
+        fields.forEach((k, v) -> {
+            Field field = ReflectionUtils.findField(Clinic.class, k);
+            field.setAccessible(true);
+            ReflectionUtils.setField(field, clinicFromRepository, v);
+        });
+        clinicRepository.update(id, clinicFromRepository);
+        return clinicFromRepository;
     }
 }

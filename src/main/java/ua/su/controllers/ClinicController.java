@@ -8,6 +8,7 @@ import ua.su.domain.Clinic;
 import ua.su.service.ClinicService;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/clinics", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -45,5 +46,10 @@ public class ClinicController {
     @PutMapping(value = "/{id}")
     public Clinic updateClinic(@RequestBody Clinic clinic, @PathVariable Long id){
         return clinicService.update(id, clinic);
+    }
+
+    @PatchMapping(value = "/{id}")
+    public Clinic patchClinic(@RequestBody Map<String, Object> fields, @PathVariable Long id){
+        return clinicService.partialUpdate(id, fields);
     }
 }

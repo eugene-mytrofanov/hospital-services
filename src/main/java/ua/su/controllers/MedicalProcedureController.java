@@ -8,6 +8,7 @@ import ua.su.domain.MedicalProcedure;
 import ua.su.service.MedicalProcedureService;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -45,5 +46,10 @@ public class MedicalProcedureController {
     @PutMapping(value = "/medical_procedures/{id}")
     public MedicalProcedure updateMedicalProcedure(@PathVariable Long id, @RequestBody MedicalProcedure medicalProcedure) {
         return medicalProcedureService.update(id, medicalProcedure);
+    }
+
+    @PatchMapping(value = "/medical_procedures/{id}")
+    public MedicalProcedure patchMedicalProcedure(@RequestBody Map<String, Object> fields, @PathVariable Long id) {
+        return medicalProcedureService.partialUpdate(id, fields);
     }
 }
