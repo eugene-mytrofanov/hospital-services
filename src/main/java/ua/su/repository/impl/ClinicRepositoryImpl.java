@@ -8,23 +8,21 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import ua.su.domain.Clinic;
-import ua.su.domain.MedicalProcedure;
 import ua.su.repository.ClinicRepository;
+import ua.su.repository.base.AbstractRepository;
 
 import java.sql.PreparedStatement;
 import java.util.List;
 
 @Repository
-public class ClinicRepositoryImpl implements ClinicRepository {
+public class ClinicRepositoryImpl extends AbstractRepository implements ClinicRepository {
 
     private static final BeanPropertyRowMapper<Clinic> ROW_MAPPER =
             new BeanPropertyRowMapper<>(Clinic.class);
 
-    private final JdbcTemplate jdbcTemplate;
-
     @Autowired
     public ClinicRepositoryImpl(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+        super(jdbcTemplate);
     }
 
     @Override
@@ -78,10 +76,6 @@ public class ClinicRepositoryImpl implements ClinicRepository {
                 clinic.getClinicType().toString(),
                 clinic.getNumberOfDoctors(), id);
         return getOne(id);
-    }
-
-    public List<MedicalProcedure> getAllByClinicId(Long id) {
-        return jdbcTemplate.query("SELECT * FROM medical_procedures WHERE clinic_id = ?", new BeanPropertyRowMapper<>(MedicalProcedure.class), id);
     }
 
     public List<String> findByCriteria(Integer n) {

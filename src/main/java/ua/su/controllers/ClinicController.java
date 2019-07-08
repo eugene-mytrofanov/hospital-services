@@ -49,7 +49,7 @@ public class ClinicController {
     }
 
     @PatchMapping(value = "/{id}")
-    public Clinic patchClinic(@RequestBody Map<String, Object> fields, @PathVariable Long id){
+    public Clinic patchClinic(@PathVariable Long id, @RequestBody Map<String, Object> fields){
         return clinicService.partialUpdate(id, fields);
     }
 }

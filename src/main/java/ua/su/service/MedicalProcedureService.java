@@ -15,7 +15,7 @@ public interface MedicalProcedureService {
 
     void deleteByClinicId(Long clinicId);
 
-    MedicalProcedure addEntry(MedicalProcedure medicalProcedure, Long clinicId);
+    MedicalProcedure addEntry(Long clinicId, MedicalProcedure medicalProcedure);
 
     MedicalProcedure update(Long id, MedicalProcedure medicalProcedure);
 

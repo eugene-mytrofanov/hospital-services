@@ -61,8 +61,8 @@ public class MedicalProcedureServiceImpl implements MedicalProcedureService {
     }
 
     @Override
-    public MedicalProcedure addEntry(MedicalProcedure medicalProcedure, Long clinicId) {
-        return medicalProcedureRepository.insert(medicalProcedure, clinicId);
+    public MedicalProcedure addEntry(Long clinicId, MedicalProcedure medicalProcedure) {
+        return medicalProcedureRepository.insert(clinicId, medicalProcedure);
     }
 
     @Override

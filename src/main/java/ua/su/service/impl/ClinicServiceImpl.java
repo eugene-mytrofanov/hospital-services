@@ -38,7 +38,7 @@ public class ClinicServiceImpl implements ClinicService {
         if (clinic == null) {
             throw new ResourceNotFoundException("Cannot find clinic with id " + id);
         }
-        List<MedicalProcedure> medicalProcedures = clinicRepository.getAllByClinicId(id);
+        List<MedicalProcedure> medicalProcedures = medicalProcedureRepository.getAllByClinicId(id);
         clinic.setMedicalProcedures(medicalProcedures);
         return clinic;
     }
@@ -60,7 +60,7 @@ public class ClinicServiceImpl implements ClinicService {
         Long clinicId = newClinic.getId();
         if (medicalProcedures != null) {
             for (MedicalProcedure medicalProcedure : medicalProcedures) {
-                medicalProcedureRepository.insert(medicalProcedure, clinicId);
+                medicalProcedureRepository.insert(clinicId, medicalProcedure);
             }
         }
         return newClinic;
@@ -77,7 +77,7 @@ public class ClinicServiceImpl implements ClinicService {
         List<MedicalProcedure> mpList = clinic.getMedicalProcedures();
         if (mpList != null) {
             for (MedicalProcedure medicalProcedure : mpList) {
-                medicalProcedureRepository.insert(medicalProcedure, id);
+                medicalProcedureRepository.insert(id, medicalProcedure);
             }
         }
         return getEntry(id);

@@ -8,21 +8,20 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import ua.su.domain.MedicalProcedure;
 import ua.su.repository.MedicalProcedureRepository;
+import ua.su.repository.base.AbstractRepository;
 
 import java.sql.PreparedStatement;
 import java.util.List;
 
 @Repository
-public class MedicalProcedureRepositoryImpl implements MedicalProcedureRepository {
+public class MedicalProcedureRepositoryImpl extends AbstractRepository implements MedicalProcedureRepository {
 
     private static final BeanPropertyRowMapper<MedicalProcedure> ROW_MAPPER =
             new BeanPropertyRowMapper<>(MedicalProcedure.class);
 
-    private final JdbcTemplate jdbcTemplate;
-
     @Autowired
     public MedicalProcedureRepositoryImpl(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+        super(jdbcTemplate);
     }
 
     @Override
@@ -35,8 +34,12 @@ public class MedicalProcedureRepositoryImpl implements MedicalProcedureRepositor
         return jdbcTemplate.queryForObject("SELECT * FROM medical_procedures WHERE id = ?", ROW_MAPPER, id);
     }
 
+    public List<MedicalProcedure> getAllByClinicId(Long clinicId) {
+        return jdbcTemplate.query("SELECT * FROM medical_procedures WHERE clinic_id = ?", new BeanPropertyRowMapper<>(MedicalProcedure.class), clinicId);
+    }
+
     @Override
-    public MedicalProcedure insert(MedicalProcedure medicalProcedure, Long clinicId) {
+    public MedicalProcedure insert(Long clinicId, MedicalProcedure medicalProcedure) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement ps =
